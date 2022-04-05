@@ -1,4 +1,16 @@
 package com.example.codelabs
 
-class WordsApplication {
+import android.app.Application
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+
+class WordsApplication: Application() {
+
+    val applicationScope = CoroutineScope(SupervisorJob())
+
+    // menggunakan lazy sehingga database dan repository hanya akan dibuat ketika
+    // dibutuhkan daripada ketika aplikasi dijalankan
+
+    val database by lazy {WordRoomDatabase.getDatabase(this, applicationScope)}
+    val repository by lazy {WordRepository(database.wordDao())}
 }
