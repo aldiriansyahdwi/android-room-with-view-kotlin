@@ -4,13 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WordDao {
     // menggunakan query pada umumnya untuk memanggil seluruh data di urutkan
     // menggunakan ascending/naik
     @Query("SELECT * FROM word_table ORDER BY word ASC")
-    fun getAlphabetizedWords(): List<Word>
+    // menambahkan flow untuk mengamati perubahan data
+    fun getAlphabetizedWords(): Flow<List<Word>>
 
     // fungsi suspend untuk menangguhkan ketika menyisipkan kata
 
